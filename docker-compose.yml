@@ -1,14 +1,19 @@
 version: '3.5'
 
 services:
-  app:
-    image: nounoursnoir/trio-test-api:latest
+  client-app:
+    image: nounoursnoir/trio-test-client-app:latest
+    container_name: trio-test-client-app
+    ports:
+      - 8000:80
+  api-app:
+    image: nounoursnoir/trio-test-api-app:latest
     container_name: trio-test-api-app
     ports:
       - 3000:3000
     depends_on:
-      - bdd
-  bdd:
+      - api-bdd
+  api-bdd:
     image: mysql:5.7
     container_name: trio-test-api-bdd
     environment:
