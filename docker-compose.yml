@@ -2,12 +2,12 @@ version: '3.5'
 
 services:
   client-app:
-    image: nounoursnoir/trio-test-client-app:latest
+    image: triotest/trio-test-client-app:latest
     container_name: trio-test-client-app
     ports:
       - 8000:80
   api-app:
-    image: nounoursnoir/trio-test-api-app:latest
+    image: triotest/trio-test-api-app:latest
     container_name: trio-test-api-app
     ports:
       - 3000:3000
