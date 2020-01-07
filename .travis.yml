@@ -23,5 +23,8 @@ script:
   - ssh-add ./private_key
   - scp -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@${EC2_URL}:/home/ubuntu/docker-compose.yml
   - scp -o StrictHostKeyChecking=no ./api/dump.sql ubuntu@${EC2_URL}:/home/ubuntu/dump.sql
+  - ssh -i ./private_key ubuntu@${EC2_URL} <<EOF
+      sudo docker-compose down --rmi all;
+      sudo docker-compose up -d;
+    EOF
   - rm ./private_key
-  - echo 'sudo docker-compose down --rmi all; sudo docker-compose up -d;' | ssh -i ./private_key ubuntu@${EC2_URL}
