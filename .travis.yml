@@ -23,8 +23,6 @@ script:
   - ssh-add ./private_key
   - scp -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@${EC2_URL}:/home/ubuntu/docker-compose.yml
   - scp -o StrictHostKeyChecking=no ./api/dump.sql ubuntu@${EC2_URL}:/home/ubuntu/dump.sql
-  - ssh -i ./private_key ubuntu@${EC2_URL} <<EOF
-      sudo docker-compose down --rmi all;
-      sudo docker-compose up -d;
-    EOF
+  - sudo curl -L "https://raw.githubusercontent.com/yuriescl/runoverssh/master/runoverssh" -o /usr/local/bin/runoverssh && chmod +x /usr/local/bin/runoverssh
+  - sudo runoverssh ubuntu "sudo docker-compose down --rmi all; sudo docker-compose up -d;" ${EC2_URL}
   - rm ./private_key
