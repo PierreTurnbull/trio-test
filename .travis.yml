@@ -24,5 +24,6 @@ script:
   - scp -o StrictHostKeyChecking=no ./api/dump.sql ubuntu@${EC2_URL}:/home/ubuntu/dump.sql
   - rm ./private_key
   - ssh -i ./private_key ubuntu@${EC2_URL} <<EOF
+      sudo docker-compose down --rmi
       sudo docker-compose up -d
     EOF
