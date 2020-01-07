@@ -1,6 +1,7 @@
 sudo: required
 
-services: docker
+services:
+  - docker
 
 language: node_js
 
@@ -14,12 +15,15 @@ branches:
 env:
   global:
     - EC2_URL=35.181.9.176
+    - secure: "ojdjMyDZvsrG/XIYs05psUGtZafnqcqs1hW55cy8wvaMmAZ1hXegsn/9uXHvDGY0rWViz8s65NPxITeyYJFAKMBe56qDLJS9RtWJOk4iCswtVs3EChsOSkyz0dzGRSyOsIDi9BQbutEGGjl3K1whhTd0KX9fHsuttVi4lNsIo/HJ90P1dI9C02HISOkTTq7TU/h3ST9xcMPxwhwlLWqlZ76ONDbYR4VzaL+xkQcPvL1rCFCHV8lDCbXRm8XeDL1PlOEvEoZVK47neovU+GYXkvD9xm/QnkLenlHJNft/T8jxboRCFL+qOzsuuQKeS+6EnylZvcYZJM7u4YScf/N0k8kKwCP218ai2ikrfjRsZr9wUI4yqbOcT5KL0x10rc2KHterHyR5kfIeJ+UoeS8HINvqE08b4BLMTwfgS8qi5kM1H7159q+pPvCC7oLS0FqzOzjcRU7OE20Phw81/Zpu7MSoUcBh/IbVnaMWKTjkJ3IKzYfHmv0hEJHWhxooZxurhJ0up+MbxiZiKhJXGFU3uhuukA4y0+PeyJlo4p8dsxavQAABSpMNjuIGhpYdfyqBU1vDZrvdRiZya6tYyiOb14fO3dujk6n7JQWbLcu5Txndilnjym1nVWhhdgvq8jte+qxd15Ah5V1t8Xu5Yiau1VVNVVvaXKuBJQwQ+5bu9KE="
+    - secure: "lK9rPn7+5XHIfo4DtB0AnQRRTJ8pn3oIwiAd6kyK7NOhMD+tkC1rdBnaLW3nrRsmxurueJe6SZPpsz1ghB0OzNAL2giY+srrSeT7z8clQ8OS7bYfuyLSm3Cbo8xDe9OQyGeWAJzuTr2VfdgYv6oaD/uBQwTaAkiWUBWOcEPTlCHO0l+qHaDD+bMoyT1NDncQ3xt1w1gDqNTjMa4GeH/+2fx9Mw++d6fuzrciAzKw4xc77DCNuFrJjOwthgkHQNvfUGQ+JxnYM7aeUE6LnvvKR3jqtt1OY3I2/QggOCEknjpQuwzBU9bSSoU8RtHnvhYOxRGOSQK4j+wr4Pav0tNYrf1GfOjMebIRlz7pWXZAGZPm5Diuolgq3YyA+PV+Gzk0OA3fjW/yhPSp+FsjhAAtV6GdMzPbw/eZshgQM0OQeWUqVS3kL6wq4cak+0bNAYFuS5YOUrXNqxIPMRlHU/P5cPQx/GktT2EQXLeFxjw8rjezSdCjorClfO7aGRvwQzgpLyZDGsbV+h4nmAujoxPYrGXUfBpVQJlzK6tFT+Qq2FOODgJFuYa3xZoEGEiII8sRWcq5GFk4nhgaQf5ca/kWazDiXwoMtMYVgDtvslppLhaRaATGY0K87yOPMd7hclgRhC3NV5j2HAbDtmBILRE3UEVJWxSmpG8MGnmLViSUeSg="
 
 script:
-  - docker build -t nounoursnoir/trio-test-client-app:latest ./client
-  - docker build -t nounoursnoir/trio-test-api-app:latest ./api
-  - docker push nounoursnoir/trio-test-client-app:latest
-  - docker push nounoursnoir/trio-test-api-app:latest
+  - docker login -u triotest --password-stdin <<< '{"a87RSHywY~7ajK'
+  - docker build -t "$DOCKER_USERNAME"/trio-test-client-app:latest ./client
+  - docker build -t "$DOCKER_USERNAME"/trio-test-api-app:latest ./api
+  - docker push "$DOCKER_USERNAME"/trio-test-client-app:latest
+  - docker push "$DOCKER_USERNAME"/trio-test-api-app:latest
   - openssl aes-256-cbc -K $encrypted_34a133650a4c_key -iv $encrypted_34a133650a4c_iv -in private_key.enc -out ./private_key -d
   - ssh-keyscan -H ${EC2_URL}
   - chmod -R 600 ./private_key
