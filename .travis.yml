@@ -19,6 +19,7 @@ script:
   - openssl aes-256-cbc -K $encrypted_34a133650a4c_key -iv $encrypted_34a133650a4c_iv -in private_key.enc -out ./private_key -d
   - ssh-keyscan -H ${EC2_URL}
   - chmod -R 600 ./private_key
+  - eval $(ssh-agent)
   - ssh-add ./private_key
   - scp -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@${EC2_URL}:/home/ubuntu/docker-compose.yml
   - scp -o StrictHostKeyChecking=no ./api/dump.sql ubuntu@${EC2_URL}:/home/ubuntu/dump.sql
