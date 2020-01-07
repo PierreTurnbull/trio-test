@@ -16,6 +16,10 @@ env:
     - EC2_URL=35.181.9.176
 
 script:
+  - docker build -t nounoursnoir/trio-test-client-app:latest ./client
+  - docker build -t nounoursnoir/trio-test-api-app:latest ./api
+  - docker push nounoursnoir/trio-test-client-app:latest
+  - docker push nounoursnoir/trio-test-api-app:latest
   - openssl aes-256-cbc -K $encrypted_34a133650a4c_key -iv $encrypted_34a133650a4c_iv -in private_key.enc -out ./private_key -d
   - ssh-keyscan -H ${EC2_URL}
   - chmod -R 600 ./private_key
