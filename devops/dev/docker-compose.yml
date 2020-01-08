@@ -2,28 +2,36 @@ version: '3.5'
 
 services:
   client-app:
-    image: triotest/trio-test-client-app:latest
+    image: nginx:alpine
     container_name: trio-test-client-app
     ports:
       - 8000:80
+    volumes:
+      - ../../client/index.html:/usr/share/nginx/html/index.html
   api-app:
-    image: triotest/trio-test-api-app:latest
+    build:
+      context: ../..
+      dockerfile: ./devops/dev/api/Dockerfile
     container_name: trio-test-api-app
     ports:
       - 3000:3000
+    volumes:
+      - ../../api/server.js:/home/node/server.js
     depends_on:
-      - api-bdd
-  api-bdd:
+      - api-db
+  api-db:
     image: mysql:5.7
-    container_name: trio-test-api-bdd
+    container_name: trio-test-api-db
     environment:
       - MYSQL_DATABASE=trio
       - MYSQL_PASSWORD=trio
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=trio
     volumes:
-      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
       - db-data:/var/lib/mysql
+    ports:
+      - 3316:3306 
 
 volumes:
   db-data: {}

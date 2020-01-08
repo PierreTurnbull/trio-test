@@ -1,0 +1,23 @@
+{
+  "name": "trio-test",
+  "version": "1.0.0",
+  "description": "trio-test is a scaffold containing a front-end, an API and a database all in one server and with CI.",
+  "main": "index.js",
+  "scripts": {
+    "status": "docker ps -a && echo '' && docker images && echo '' && docker volume ls && echo '' && docker network ls",
+    "start": "docker-compose -f ./devops/dev/docker-compose.yml up",
+    "start:bg": "docker-compose -f ./devops/dev/docker-compose.yml up -d",
+    "stop": "docker-compose -f ./devops/dev/docker-compose.yml down",
+    "reset": "docker-compose -f ./devops/dev/docker-compose.yml down --rmi all -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PierreTurnbull/trio-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PierreTurnbull/trio-test/issues"
+  },
+  "homepage": "https://github.com/PierreTurnbull/trio-test#readme"
+}

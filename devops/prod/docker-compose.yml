@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  client-app:
+    image: triotest/trio-test-client-app:latest
+    container_name: trio-test-client-app
+    ports:
+      - 8000:80
+  api-app:
+    image: triotest/trio-test-api-app:latest
+    container_name: trio-test-api-app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api-db
+  api-db:
+    image: mysql:5.7
+    container_name: trio-test-api-db
+    environment:
+      - MYSQL_DATABASE=trio
+      - MYSQL_PASSWORD=trio
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=trio
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data: {}
