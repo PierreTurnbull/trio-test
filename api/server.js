@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   password: 'trio',
   database: 'trio'
 });
-// connection.connect();
+connection.connect();
 
 app.get('/', function (req, res) {
   res.send('Ceci est l\'API.')
