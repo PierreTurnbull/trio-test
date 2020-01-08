@@ -1,6 +1,6 @@
 # trio-test
 
-trio-test is a scaffold containing a front-end, an API and a database all in one server and with CI.
+trio-test is a scaffold containing a front-end, an API and a database all to be deployed on one server and with CI.
 
 It uses:
 - Docker
@@ -21,13 +21,13 @@ And requires
 Encrypt your private key with Travis (add the option `--com` if you are using travis-ci.com instead of travis-ci.org):
 
 ```
-travis encrypt-file <path-to-private-key> <path-to-repository>/private_key.enc
+travis encrypt-file <path-to-private-key> <path-to-repository>/devops/prod/private_key.enc
 ```
 
 It will provide you a command to add to your `.travis.yml`. All you have to do is make sure that the 2 environment variables (`$encrypted_<some-hex-number>`) provided match with the ones in your `.travis.yml`. If not, replace them.
 
 ```
-openssl aes-256-cbc -K $encrypted_34a133650a4c_key -iv $encrypted_34a133650a4c_iv -in <path-to-repository>/private_key.enc -out ~\/.ssh/<private-key-name> -d
+openssl aes-256-cbc -K $encrypted_34a133650a4c_key -iv $encrypted_34a133650a4c_iv -in <path-to-repository>/devops/prod/private_key.enc -out ~\/.ssh/<private-key-name> -d
 ```
 
 *Note that these environment variables are automatically added to your repository.*
