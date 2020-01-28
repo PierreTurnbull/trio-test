@@ -36,6 +36,6 @@ Set the following environment variables for your repository, at `https://travis-
 
 - `DOCKER_PASSWORD`: your Docker Hub password
 - `DOCKER_USERNAME`: your Docker Hub username
-- `SERVER_URL`: your Docker Hub username
+- `SERVER_URL`: your server URL
 
 Your project is ready to run. Pushing on master will set up everything correctly on your server. You can launch a development environment on your machine with `npm start` and stop it with `npm stop`.
